@@ -4,22 +4,30 @@ import list.EstruturaElementar;
 
 public class ListaLigada implements EstruturaElementar{
 
-    private No cabeca;
+    private No _cabeca;
 
     public ListaLigada() {
-
+        _cabeca = null;
     }
 
     @Override
     public boolean buscaElemento(int valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscaElemento'");
+        return (buscaIndice(valor) > -1);
     }
 
     @Override
     public int buscaIndice(int valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscaIndice'");
+        if (_cabeca == null) {
+            return -1;
+        }
+        int posicao = 0;
+        for (No atual = _cabeca; atual != null; atual = atual.getProximo()) {
+            if (atual.getValor() == valor) {
+                return posicao;
+            }
+            posicao += 1;
+        }
+        return -1;
     }
 
     @Override
@@ -48,8 +56,14 @@ public class ListaLigada implements EstruturaElementar{
 
     @Override
     public void insereElemento(int valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insereElemento'");
+        No novo = new No(valor);
+        if (_cabeca == null) {
+            _cabeca = novo;
+        } else {
+            No atual = _cabeca;
+            _cabeca = new No(valor);
+            _cabeca.setProximo(atual);
+        }
     }
 
     @Override
@@ -60,14 +74,21 @@ public class ListaLigada implements EstruturaElementar{
 
     @Override
     public void insereInicio(int valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insereInicio'");
+        insereElemento(valor);
     }
 
     @Override
     public void insereFim(int valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insereFim'");
+        No novo = new No(valor);
+        if (_cabeca == null) {
+            _cabeca = novo;
+        } else {
+            for (No atual = _cabeca; atual != null; atual = atual.getProximo()){
+                if (atual.getProximo() == null){
+                    atual.setProximo(novo);
+                }
+            }
+        }
     }
 
     @Override
